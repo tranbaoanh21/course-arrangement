@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: lich-gon-hcmut
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    maxShutdownDelaySeconds: 30
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 4000
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: test
+      - key: DB_SSL
+        value: true
+      - key: DB_SSL_REJECT_UNAUTHORIZED
+        value: true
+      - key: JWT_SECRET
+        generateValue: true

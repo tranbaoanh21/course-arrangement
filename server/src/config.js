@@ -1,10 +1,14 @@
 import 'dotenv/config';
 
 const isProduction = process.env.NODE_ENV === 'production';
+const renderOrigin = process.env.RENDER_EXTERNAL_HOSTNAME
+  ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`
+  : '';
 
 if (isProduction) {
-  const requiredVariables = ['CLIENT_ORIGIN', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'JWT_SECRET'];
+  const requiredVariables = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'JWT_SECRET'];
   const missingVariables = requiredVariables.filter((name) => !process.env[name]);
+  if (!process.env.CLIENT_ORIGIN && !renderOrigin) missingVariables.push('CLIENT_ORIGIN');
   if (missingVariables.length) {
     throw new Error(`Thiếu biến môi trường production: ${missingVariables.join(', ')}`);
   }
@@ -15,7 +19,7 @@ if (isProduction) {
 
 export const config = {
   port: Number(process.env.PORT || 4000),
-  clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  clientOrigin: process.env.CLIENT_ORIGIN || renderOrigin || 'http://localhost:5173',
   jwtSecret: process.env.JWT_SECRET || 'development-only-secret-change-me',
   isProduction,
   localScheduleOverrideEmail: process.env.LOCAL_SCHEDULE_OVERRIDE_EMAIL || '',

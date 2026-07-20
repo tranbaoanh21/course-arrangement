@@ -56,6 +56,8 @@ npm run check   # chạy toàn bộ test và production build
 
 Có thể build một container production bằng `Dockerfile` ở thư mục gốc. `docker-compose.yml` chỉ dành cho phát triển local; mật khẩu trong file này không được dùng trên production.
 
+Phương án miễn phí được khuyến nghị cho nhóm người dùng nhỏ là **Render Free + TiDB Cloud Starter**. Xem hướng dẫn từng bước tại [`docs/deployment-render-tidb.md`](docs/deployment-render-tidb.md). `render.yaml` sẽ tạo một web service Docker, sinh `JWT_SECRET` và hỏi thông tin kết nối database mà không ghi secret vào GitHub.
+
 Các chức năng cần dịch vụ bên ngoài và chưa nằm trong MVP: xác minh email, quên mật khẩu, sao lưu database tự động và giám sát lỗi production.
 
 ## Cấu trúc chính

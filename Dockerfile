@@ -26,4 +26,4 @@ COPY --from=build /app/client/dist ./client/dist
 USER node
 EXPOSE 4000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:production"]
