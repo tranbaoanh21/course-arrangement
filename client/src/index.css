@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #0f172a;
+  background: #f5f6f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(21, 87, 176, 0.2);
+  outline-offset: 1px;
+}
+
+.content-panel {
+  @apply rounded-xl border border-slate-200 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.03)];
+}
+
+.page-title {
+  @apply text-2xl font-semibold tracking-[-0.03em] text-slate-950;
+}
+
+.page-subtitle {
+  @apply mt-1 text-sm leading-6 text-slate-500;
+}
+
+.primary-button,
+.danger-button,
+.secondary-button {
+  @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors;
+}
+
+.primary-button {
+  @apply bg-[#1557b0] text-white hover:bg-[#10498f];
+}
+
+.danger-button {
+  @apply bg-red-600 text-white hover:bg-red-700;
+}
+
+.secondary-button {
+  @apply border border-slate-300 bg-white text-slate-700 hover:border-slate-400 hover:bg-slate-50;
+}
+
+.icon-button {
+  @apply inline-grid size-9 shrink-0 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900;
+}
+
+.form-field,
+.compact-field {
+  @apply block text-sm;
+}
+
+.form-field > span {
+  @apply mb-1.5 block text-xs font-semibold text-slate-700;
+}
+
+.period-label {
+  @apply mb-1 block text-[11px] font-semibold text-slate-500;
+}
+
+.form-field em {
+  @apply font-normal not-italic text-slate-400;
+}
+
+.form-field input,
+.form-field select,
+.compact-field input,
+.compact-field select {
+  @apply h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-900 shadow-[0_1px_1px_rgba(15,23,42,0.02)] transition-colors placeholder:text-slate-400 hover:border-slate-400 focus:border-[#1557b0];
+}
+
+.menu-item {
+  @apply flex w-full items-center gap-2 rounded-md px-2.5 py-2 text-left text-sm text-slate-700 hover:bg-slate-100;
+}
+
+.top-nav-item {
+  @apply relative flex h-full items-center px-3 text-sm font-medium text-slate-500 transition-colors hover:text-slate-950;
+}
+
+.top-nav-item.active {
+  @apply font-semibold text-slate-950;
+}
+
+.top-nav-item.active::after {
+  content: '';
+  @apply absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-[#1557b0];
+}
+
+.mobile-nav-item {
+  @apply flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50;
+}
+
+.mobile-nav-item.active {
+  @apply bg-blue-50 text-[#1557b0];
+}
+
+.segment-control {
+  @apply inline-flex rounded-lg border border-slate-200 bg-slate-100 p-1;
+}
+
+.segment-control button {
+  @apply rounded-md px-3.5 py-2 text-sm font-medium text-slate-500 transition-colors;
+}
+
+.segment-control button.active {
+  @apply bg-white font-semibold text-slate-950 shadow-sm;
+}
+
+.course-picker {
+  @apply mb-2 overflow-hidden rounded-lg border border-transparent bg-transparent open:border-slate-200 open:bg-white;
+}
+
+.course-picker summary {
+  @apply flex cursor-pointer list-none items-center justify-between gap-2 px-3 py-3 text-sm;
+}
+
+.course-picker summary::-webkit-details-marker {
+  display: none;
+}
+
+.course-picker summary > span {
+  @apply min-w-0;
+}
+
+.course-picker summary strong {
+  @apply block font-mono text-xs text-[#1557b0];
+}
+
+.course-picker summary small {
+  @apply mt-0.5 block truncate text-xs text-slate-600;
+}
+
+.course-picker[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.section-choice {
+  @apply flex w-full items-start gap-2.5 rounded-md px-2.5 py-2 text-left text-slate-600 transition-colors hover:bg-slate-50;
+}
+
+.section-choice.selected {
+  @apply bg-blue-50 text-[#1557b0];
+}
+
+.selection-mark {
+  @apply mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border border-slate-300 bg-white;
+}
+
+.section-choice.selected .selection-mark {
+  @apply border-[#1557b0] bg-[#1557b0] text-white;
+}
+
+.section-choice strong {
+  @apply block text-xs font-semibold;
+}
+
+.section-choice small {
+  @apply mt-0.5 block truncate text-[11px] leading-4 text-slate-500;
+}
+
+.option-tabs {
+  @apply flex items-center gap-1 overflow-x-auto;
+}
+
+.option-tabs button {
+  @apply whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-900;
+}
+
+.option-tabs button.active {
+  @apply bg-blue-50 font-semibold text-[#1557b0];
+}
+
+.calendar-scroll {
+  @apply w-full overflow-x-auto rounded-lg border border-slate-200 bg-white;
+}
+
+.calendar-shell {
+  display: grid;
+  grid-template-columns: 64px repeat(6, minmax(112px, 1fr));
+  grid-template-rows: 46px 660px;
+  min-width: 820px;
+}
+
+.calendar-corner,
+.calendar-day-heading {
+  @apply border-b border-slate-200 bg-slate-50;
+}
+
+.calendar-day-heading {
+  @apply flex items-center justify-center gap-1.5 border-l border-slate-200 text-center;
+}
+
+.calendar-day-heading span {
+  @apply text-xs font-semibold text-slate-800;
+}
+
+.calendar-day-heading small {
+  @apply hidden text-[10px] font-normal text-slate-400 xl:inline;
+}
+
+.calendar-time-axis {
+  @apply relative bg-slate-50;
+}
+
+.calendar-time-axis span {
+  @apply absolute right-2 -translate-y-1/2 font-mono text-[10px] text-slate-400;
+}
+
+.calendar-time-axis span:first-child {
+  transform: translateY(4px);
+}
+
+.calendar-time-axis span:last-child {
+  transform: translateY(-12px);
+}
+
+.calendar-day-column {
+  @apply relative border-l border-slate-200 bg-white;
+  height: 660px;
+}
+
+.calendar-hour-line {
+  @apply pointer-events-none absolute inset-x-0 border-t border-slate-100;
+}
+
+.calendar-event {
+  @apply absolute left-1 right-1 z-10 overflow-hidden rounded-md border-l-[3px] px-2 py-1 text-[11px] shadow-[0_1px_2px_rgba(15,23,42,0.07)];
+  min-height: 28px;
+}
+
+.calendar-event strong,
+.calendar-event span,
+.calendar-event small {
+  @apply block truncate;
+}
+
+.calendar-event strong {
+  @apply font-bold leading-4;
+}
+
+.calendar-event span {
+  @apply font-medium leading-4 opacity-80;
+}
+
+.calendar-event small {
+  @apply mt-0.5 text-[10px] leading-4 opacity-70;
+}
+
+@media (max-width: 639px) {
+  .calendar-shell {
+    grid-template-columns: 52px repeat(6, 112px);
+  }
+}
