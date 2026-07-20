@@ -16,15 +16,14 @@ scheduleRouter.post('/generate', async (req, res) => {
   if (courses.some((course) => !course.sections.length)) {
     return res.status(400).json({ message: 'Mỗi môn cần có ít nhất một lớp.' });
   }
-  const hasLocalOverride = !config.isProduction
-    && config.localScheduleOverrideEmail
-    && req.user.email.toLowerCase() === config.localScheduleOverrideEmail.toLowerCase();
-  const effectiveCourses = hasLocalOverride
-    ? applyRequiredSections(courses, config.localRequiredSections)
+  const hasScheduleOverride = config.scheduleOverrideEmail
+    && req.user.email.toLowerCase() === config.scheduleOverrideEmail.toLowerCase();
+  const effectiveCourses = hasScheduleOverride
+    ? applyRequiredSections(courses, config.requiredSections)
     : courses;
   res.json({
     ...generateCompactSchedules(effectiveCourses),
-    requiredSections: hasLocalOverride ? config.localRequiredSections : [],
+    requiredSections: hasScheduleOverride ? config.requiredSections : [],
   });
 });
 

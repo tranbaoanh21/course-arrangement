@@ -51,7 +51,7 @@ npm run check   # chạy toàn bộ test và production build
 2. Khai báo các biến theo `server/.env.production.example` trong phần secret/environment của nền tảng deploy.
 3. Tạo `JWT_SECRET` ngẫu nhiên có ít nhất 32 ký tự; không dùng secret local.
 4. Đặt `CLIENT_ORIGIN` thành đúng URL HTTPS production.
-5. Không khai báo `LOCAL_SCHEDULE_OVERRIDE_EMAIL` và `LOCAL_REQUIRED_SECTIONS` trên production. Code cũng chủ động vô hiệu hóa ngoại lệ này khi `NODE_ENV=production`.
+5. Ngoại lệ khóa lớp theo tài khoản là tùy chọn. Trên production, chỉ bật bằng cặp `SCHEDULE_OVERRIDE_EMAIL` và `REQUIRED_SECTIONS`; không ghi email cá nhân vào source code.
 6. Chạy `npm run check` trước mỗi lần deploy.
 
 Có thể build một container production bằng `Dockerfile` ở thư mục gốc. `docker-compose.yml` chỉ dành cho phát triển local; mật khẩu trong file này không được dùng trên production.

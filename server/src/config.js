@@ -4,6 +4,17 @@ const isProduction = process.env.NODE_ENV === 'production';
 const renderOrigin = process.env.RENDER_EXTERNAL_HOSTNAME
   ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`
   : '';
+const scheduleOverrideEmail = process.env.SCHEDULE_OVERRIDE_EMAIL
+  || process.env.LOCAL_SCHEDULE_OVERRIDE_EMAIL
+  || '';
+const requiredSections = (
+  process.env.REQUIRED_SECTIONS
+  || process.env.LOCAL_REQUIRED_SECTIONS
+  || ''
+)
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean);
 
 if (isProduction) {
   const requiredVariables = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'JWT_SECRET'];
@@ -15,6 +26,9 @@ if (isProduction) {
   if (process.env.JWT_SECRET.length < 32) {
     throw new Error('JWT_SECRET production phải có ít nhất 32 ký tự.');
   }
+  if (Boolean(scheduleOverrideEmail) !== Boolean(requiredSections.length)) {
+    throw new Error('SCHEDULE_OVERRIDE_EMAIL và REQUIRED_SECTIONS phải được cấu hình cùng nhau.');
+  }
 }
 
 export const config = {
@@ -22,11 +36,8 @@ export const config = {
   clientOrigin: process.env.CLIENT_ORIGIN || renderOrigin || 'http://localhost:5173',
   jwtSecret: process.env.JWT_SECRET || 'development-only-secret-change-me',
   isProduction,
-  localScheduleOverrideEmail: process.env.LOCAL_SCHEDULE_OVERRIDE_EMAIL || '',
-  localRequiredSections: (process.env.LOCAL_REQUIRED_SECTIONS || '')
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean),
+  scheduleOverrideEmail,
+  requiredSections,
   db: {
     host: process.env.DB_HOST || '127.0.0.1',
     port: Number(process.env.DB_PORT || 3306),

@@ -30,11 +30,13 @@ Với Starter, port thường là `4000`, database mặc định là `test`, và
 2. Cấp cho Render quyền đọc repository `tranbaoanh21/course-arrangement`.
 3. Chọn **New → Blueprint**.
 4. Chọn repository trên và xác nhận file `render.yaml`.
-5. Render sẽ yêu cầu ba secret chưa có trong GitHub:
+5. Render sẽ yêu cầu các giá trị chưa có trong GitHub:
 
    - `DB_HOST`: host từ TiDB, không kèm `mysql://` và không kèm port.
    - `DB_USER`: username đầy đủ từ TiDB.
    - `DB_PASSWORD`: mật khẩu database vừa đặt.
+   - `SCHEDULE_OVERRIDE_EMAIL`: email tài khoản duy nhất cần khóa lớp; để trống nếu không dùng.
+   - `REQUIRED_SECTIONS`: danh sách `MÃ_MÔN:MÃ_LỚP` phân cách bằng dấu phẩy; để trống nếu không dùng.
 
 6. Chọn **Apply** và đợi build/deploy hoàn tất.
 
@@ -57,7 +59,7 @@ Giả sử Render cấp URL `https://lich-gon-hcmut.onrender.com`:
 - Render Free ngủ sau một khoảng thời gian không có request. Lần mở đầu tiên sau khi ngủ có thể mất khoảng một phút.
 - Dữ liệu không nằm trên filesystem Render mà nằm trong TiDB, nên việc Render ngủ hoặc deploy lại không làm mất tài khoản và lịch đã lưu.
 - TiDB sẽ chặn hoặc giới hạn truy cập khi vượt quota miễn phí nếu spending limit vẫn là `0`; hệ thống không tự trừ tiền.
-- Không đặt `LOCAL_SCHEDULE_OVERRIDE_EMAIL` hoặc `LOCAL_REQUIRED_SECTIONS` trên production.
+- Không đặt các biến `LOCAL_*` trên production. Nếu cần khóa lớp cho một tài khoản, dùng cặp `SCHEDULE_OVERRIDE_EMAIL` và `REQUIRED_SECTIONS`.
 
 ## 5. Mỗi lần cập nhật code
 
