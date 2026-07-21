@@ -6,6 +6,7 @@ import Brand from './components/Brand.jsx';
 import CourseDialog from './components/CourseDialog.jsx';
 import CourseList from './components/CourseList.jsx';
 import ConfirmDialog from './components/ConfirmDialog.jsx';
+import HcmutImportDialog from './components/HcmutImportDialog.jsx';
 import Planner from './components/Planner.jsx';
 import SavedSchedules from './components/SavedSchedules.jsx';
 
@@ -23,6 +24,7 @@ export default function App() {
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [importOpen, setImportOpen] = useState(false);
 
   useEffect(() => {
     api.me()
@@ -58,6 +60,12 @@ export default function App() {
     if (dialog.course) await api.updateCourse(dialog.course.id, input);
     else await api.createCourse(input);
     await loadCourses();
+  }
+
+  async function importCourses(input) {
+    const result = await api.importCourses(input);
+    setCourses(result.courses);
+    return result.summary;
   }
 
   function requestDelete(type, item) {
@@ -175,6 +183,7 @@ export default function App() {
           <CourseList
             courses={courses}
             onAdd={() => setDialog({ open: true, course: null })}
+            onImport={() => setImportOpen(true)}
             onEdit={(course) => setDialog({ open: true, course })}
             onDelete={(course) => requestDelete('course', course)}
           />
@@ -205,6 +214,14 @@ export default function App() {
         semester={SEMESTER}
         onClose={() => setDialog({ open: false, course: null })}
         onSave={saveCourse}
+      />
+
+      <HcmutImportDialog
+        open={importOpen}
+        courses={courses}
+        semester={SEMESTER}
+        onClose={() => setImportOpen(false)}
+        onImport={importCourses}
       />
 
       <ConfirmDialog

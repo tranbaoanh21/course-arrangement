@@ -25,6 +25,7 @@ export const api = {
   logout: () => request('/auth/logout', { method: 'POST' }),
   getCourses: (semester) => request(`/courses?semester=${encodeURIComponent(semester)}`),
   createCourse: (input) => request('/courses', { method: 'POST', body: JSON.stringify(input) }),
+  importCourses: (input) => request('/courses/import', { method: 'POST', body: JSON.stringify(input) }),
   updateCourse: (id, input) => request(`/courses/${id}`, { method: 'PUT', body: JSON.stringify(input) }),
   deleteCourse: (id) => request(`/courses/${id}`, { method: 'DELETE' }),
   generateSchedules: (semester) => request('/schedules/generate', {

@@ -26,13 +26,14 @@ Nếu dùng MySQL cài trực tiếp, chạy file `server/database/schema.sql`, 
 ## Luồng chính
 
 1. Đăng ký hoặc đăng nhập.
-2. Thêm mã môn, tên môn và tất cả lớp có thể đăng ký.
-3. Mỗi lớp có thể có một hoặc nhiều buổi, nhập bằng tiết bắt đầu–kết thúc từ tiết 2 đến tiết 12. Hệ thống tự đổi sang giờ theo công thức `X + 5:00` đến `Y + 5:50`.
-4. Chọn **Tạo 3 phương án** để hệ thống loại lịch trùng giờ và xếp theo:
+2. Chọn **Import từ HCMUT**, query một môn trên trang đăng ký rồi copy toàn bộ trang để hệ thống đọc mã lớp, thứ và tiết học. Văn bản gốc chỉ được xử lý trên trình duyệt, không được gửi lên server. Vẫn có thể thêm môn thủ công.
+3. Khi import, lớp đã đủ sĩ số bị loại khỏi thuật toán. Lớp đã nằm trong danh sách đăng ký của sinh viên vẫn được giữ kể cả khi ảnh chụp danh sách query hiển thị đã đủ.
+4. Mỗi lớp có thể có một hoặc nhiều buổi, nhập bằng tiết bắt đầu–kết thúc từ tiết 2 đến tiết 12. Hệ thống tự đổi sang giờ theo công thức `X + 5:00` đến `Y + 5:50`.
+5. Chọn **Tạo 3 phương án** để hệ thống loại lịch trùng giờ và xếp theo:
    - số ngày học tăng dần;
    - tổng thời gian trống tăng dần.
-5. Có thể chuyển sang **Tự chọn lớp**, nhấn từng lớp để xem trực tiếp trên thời khóa biểu.
-6. Lưu phương án mong muốn vào tài khoản.
+6. Có thể chuyển sang **Tự chọn lớp**, nhấn từng lớp để xem trực tiếp trên thời khóa biểu.
+7. Lưu phương án mong muốn vào tài khoản.
 
 ## Các lệnh
 

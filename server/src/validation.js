@@ -20,15 +20,41 @@ export const meetingSchema = z.object({
   }
 });
 
-export const courseSchema = z.object({
+const sectionSchema = z.object({
+  code: z.string().trim().min(1).max(30).transform((value) => value.toUpperCase()),
+  instructor: z.string().trim().max(120).optional().default(''),
+  meetings: z.array(meetingSchema).min(1).max(6),
+});
+
+const courseFields = {
   code: z.string().trim().min(2).max(30).transform((value) => value.toUpperCase()),
   name: z.string().trim().min(2).max(150),
+  sections: z.array(sectionSchema).min(1).max(30),
+};
+
+function requireUniqueSectionCodes(course, context) {
+  const codes = course.sections.map((section) => section.code);
+  if (new Set(codes).size !== codes.length) {
+    context.addIssue({ code: 'custom', message: `${course.code}: mã lớp không được trùng nhau.` });
+  }
+}
+
+const importedCourseSchema = z.object(courseFields).superRefine(requireUniqueSectionCodes);
+
+export const courseSchema = z.object({
+  ...courseFields,
   semester: z.string().trim().min(2).max(40).default('HK261'),
-  sections: z.array(z.object({
-    code: z.string().trim().min(1).max(30).transform((value) => value.toUpperCase()),
-    instructor: z.string().trim().max(120).optional().default(''),
-    meetings: z.array(meetingSchema).min(1).max(6),
-  })).min(1).max(30),
+}).superRefine(requireUniqueSectionCodes);
+
+export const courseImportSchema = z.object({
+  semester: z.string().trim().min(2).max(40).default('HK261'),
+  queriedCourse: importedCourseSchema,
+  registeredCourses: z.array(importedCourseSchema).max(30).optional().default([]),
+}).superRefine((input, context) => {
+  const codes = [input.queriedCourse.code, ...input.registeredCourses.map((course) => course.code)];
+  if (new Set(codes).size !== codes.length) {
+    context.addIssue({ code: 'custom', message: 'Danh sách import có mã môn trùng nhau.' });
+  }
 });
 
 export const credentialsSchema = z.object({

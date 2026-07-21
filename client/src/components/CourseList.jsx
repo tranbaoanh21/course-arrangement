@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { BookOpen, ChevronDown, ChevronRight, MoreHorizontal, Pencil, Plus, Trash2 } from 'lucide-react';
+import { BookOpen, ChevronDown, ChevronRight, ClipboardPaste, MoreHorizontal, Pencil, Plus, Trash2 } from 'lucide-react';
 import { formatMeeting } from '../utils/schedule.js';
 
-export default function CourseList({ courses, onAdd, onEdit, onDelete }) {
+export default function CourseList({ courses, onAdd, onImport, onEdit, onDelete }) {
   const [expanded, setExpanded] = useState(new Set());
   const [menuCourseId, setMenuCourseId] = useState(null);
 
@@ -22,7 +22,10 @@ export default function CourseList({ courses, onAdd, onEdit, onDelete }) {
           <h1 className="page-title">Môn học HK261</h1>
           <p className="page-subtitle">Thêm tất cả lớp có thể đăng ký trước khi tạo lịch.</p>
         </div>
-        <button className="primary-button self-start" onClick={onAdd}><Plus size={17} /> Thêm môn</button>
+        <div className="flex flex-wrap gap-2 self-start">
+          <button className="secondary-button" onClick={onImport}><ClipboardPaste size={16} /> Import từ HCMUT</button>
+          <button className="primary-button" onClick={onAdd}><Plus size={17} /> Thêm thủ công</button>
+        </div>
       </div>
 
       {courses.length === 0 ? (
@@ -30,8 +33,11 @@ export default function CourseList({ courses, onAdd, onEdit, onDelete }) {
           <div className="max-w-sm">
             <span className="mx-auto grid size-12 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-500"><BookOpen size={22} /></span>
             <h2 className="mt-4 text-lg font-semibold text-slate-950">Chưa có môn học nào</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-500">Bắt đầu bằng một môn, sau đó nhập tất cả lớp L01, L02… mà bạn có thể đăng ký.</p>
-            <button className="primary-button mx-auto mt-5" onClick={onAdd}><Plus size={17} /> Thêm môn đầu tiên</button>
+            <p className="mt-2 text-sm leading-6 text-slate-500">Paste nội dung trang đăng ký HCMUT để lấy lớp tự động, hoặc nhập môn thủ công.</p>
+            <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+              <button className="primary-button" onClick={onImport}><ClipboardPaste size={16} /> Import từ HCMUT</button>
+              <button className="secondary-button" onClick={onAdd}><Plus size={17} /> Thêm thủ công</button>
+            </div>
           </div>
         </div>
       ) : (
